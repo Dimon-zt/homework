@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TechnoIT{% endblock %}</title>
+    <!-- Подключение Bootstrap -->
+    <link href="{% static 'main/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Ваши пользовательские стили -->
+    <link href="{% static 'main/css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигационная панель -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">TechnoIT</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/data/">Загрузка данных</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/arbitration/">Арбитраж</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/trade/">Торговля</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/exchanges/">Биржи/обменники</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/APIdata/">Данные API</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основное содержимое -->
+    <main class="container my-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Подвал -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p>© 2025. All rights reserved.</p>
+    </footer>
+
+    <!-- JS -->
+    <script src="{% static 'main/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

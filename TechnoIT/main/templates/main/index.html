@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+Главная - TechnoIT
+{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-4">Современные IT-решения для вашего бизнеса</h1>
+    <p class="lead">Эта страница демонстрирует адаптивный и настраиваемый дизайн, разработанный для максимального удобства.</p>
+    <div class="mt-4">
+        <a href="/get-quotes/" class="btn btn-primary btn-lg me-2">Получить предложение</a>
+        <a href="/get-started/" class="btn btn-outline-light btn-lg">Начать сейчас</a>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-4 text-center">
+        <img src="{% static 'main/img/service1.jpg' %}" class="img-fluid rounded" alt="Услуга 1">
+        <h3 class="mt-3">Услуга 1</h3>
+        <p>Краткое описание первой услуги.</p>
+    </div>
+    <div class="col-md-4 text-center">
+        <img src="{% static 'main/img/service2.jpg' %}" class="img-fluid rounded" alt="Услуга 2">
+        <h3 class="mt-3">Услуга 2</h3>
+        <p>Краткое описание второй услуги.</p>
+    </div>
+    <div class="col-md-4 text-center">
+        <img src="{% static 'main/img/service3.jpg' %}" class="img-fluid rounded" alt="Услуга 3">
+        <h3 class="mt-3">Услуга 3</h3>
+        <p>Краткое описание третьей услуги.</p>
+    </div>
+</div>
+{% endblock %}

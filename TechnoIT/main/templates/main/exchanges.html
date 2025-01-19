@@ -1,0 +1,86 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Биржи и обменники
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-4">Биржи и обменники</h1>
+
+    <!-- Форма загрузки данных -->
+    <div class="mb-4">
+        <h2>Загрузка данных</h2>
+        <form method="post" enctype="multipart/form-data" action="/exchanges/upload/">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="fileUpload" class="form-label">Загрузить файл с биржами</label>
+                <input type="file" class="form-control" id="fileUpload" name="file">
+            </div>
+            <button type="submit" class="btn btn-primary">Загрузить</button>
+        </form>
+
+        {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <hr>
+
+        <h2>Добавление биржи вручную</h2>
+        <form method="post" action="/exchanges/add/">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exchangeName" class="form-label">Название биржи</label>
+                <input type="text" class="form-control" id="exchangeName" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="apiUrl" class="form-label">API URL</label>
+                <input type="text" class="form-control" id="apiUrl" name="api_url" required>
+            </div>
+            <button type="submit" class="btn btn-success">Добавить</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <!-- Таблица с данными о биржах -->
+    <h2>Список бирж</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Название</th>
+                <th>API URL</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exchange in exchanges %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ exchange.name }}</td>
+                <td>{{ exchange.api_url }}</td>
+                <td>
+                    <!-- Кнопка редактирования -->
+                    <a href="/exchanges/edit/{{ exchange.id }}/" class="btn btn-warning btn-sm">Редактировать</a>
+
+                    <!-- Кнопка удаления -->
+                    <form method="post" action="/exchanges/delete/{{ exchange.id }}/" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">Данные о биржах отсутствуют</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

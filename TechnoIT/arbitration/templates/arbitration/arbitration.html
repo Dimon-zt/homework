@@ -1,0 +1,62 @@
+{% extends 'main/base.html' %}
+{% load custom_filters %}
+
+{% block title %}
+Арбитраж
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-4">Арбитраж</h1>
+
+    <!-- Форма добавления биржи -->
+    <form method="post" action="{% url 'add_exchange' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exchangeName" class="form-label">Название биржи</label>
+            <input type="text" class="form-control" id="exchangeName" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="apiUrl" class="form-label">API URL</label>
+            <input type="text" class="form-control" id="apiUrl" name="api_url" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить биржу</button>
+    </form>
+
+    <!-- Таблица котировок -->
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Биржа</th>
+                {% for pair in pairs %}
+                    <th>{{ pair }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for exchange in exchanges %}
+            <tr>
+                <td>{{ exchange.name }}</td>
+                {% for pair in pairs %}
+                    <td>
+                        {% with prices|dict_get:exchange.id|dict_get:pair.id as price %}
+                            {{ price.price_ask }} / {{ price.price_bid }}
+                        {% endwith %}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Форма задания интервала обновления -->
+    <form method="post" action="{% url 'set_interval' %}" class="mt-3">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="interval" class="form-label">Интервал обновления (в секундах)</label>
+            <input type="number" class="form-control" id="interval" name="interval" value="{{ interval }}" required>
+        </div>
+        <button type="submit" class="btn btn-secondary">Установить интервал</button>
+    </form>
+</div>
+{% endblock %}
